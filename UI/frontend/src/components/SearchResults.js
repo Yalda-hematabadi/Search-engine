@@ -5,24 +5,33 @@ const SearchResults = ({ results }) => {
   return (
     <Box>
       {results.map((result, index) => (
-        <Card key={index} style={{ marginBottom: '10px' }}>
+        <Card key={result.id || index} style={{ marginBottom: '10px' }}>
           <CardContent>
             <Typography variant="h6" gutterBottom>
-              <a href={result._source.url} target="_blank" rel="noopener noreferrer">
-                {result._source.title}
+              <a href={result.url} target="_blank" rel="noopener noreferrer">
+                {result.title}
               </a>
             </Typography>
             <Typography variant="body2" color="textSecondary">
-              {result._source.content}
+              {result.content}
             </Typography>
-            <Typography variant="caption" color="textSecondary">
-              Tags: {result._source.tags.join(', ')}
-            </Typography>
+            {result.tags && (
+              <Typography variant="caption" color="textSecondary">
+                Tags: {result.tags.join(', ')}
+              </Typography>
+            )}
+            {result.keywords && (
+              <Typography variant="caption" color="textSecondary" display="block">
+                Keywords: {result.keywords.join(', ')}
+              </Typography>
+            )}
+            {result.crawled_date && (
+              <Typography variant="caption" color="textSecondary" display="block">
+                Crawled Date: {new Date(result.crawled_date).toLocaleString()}
+              </Typography>
+            )}
             <Typography variant="caption" color="textSecondary" display="block">
-              Keywords: {result._source.keywords.join(', ')}
-            </Typography>
-            <Typography variant="caption" color="textSecondary" display="block">
-              Crawled Date: {new Date(result._source.crawled_date).toLocaleString()}
+              Score: {result.score}
             </Typography>
           </CardContent>
         </Card>
